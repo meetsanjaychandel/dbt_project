@@ -1,0 +1,37 @@
+version: 2
+
+sources:
+  - name: staging_source
+    description: "we are connecting to the dbt_postgres_db database and l1_staging schema for source items."
+    database: dbt_postgres_db
+    schema: l1_landing
+    freshness:
+      warn_after:
+        count: 1
+        period: hour
+      error_after:
+        count: 1
+        period: hour
+      filter: 
+    loaded_at_field: updated_at
+
+    tables:
+      - name: orders
+        description: "orders table from l1_staging schema."
+      - name: customers
+        description: "customers table from l1_staging schema."
+      - name: orderitems
+        description: "ordersitems table from l1_staging schema."
+      - name: emp
+        description: "employees table from l1_staging schema."
+        identifier: employees
+        columns:
+          - name: address
+            tests:
+              - not_null
+              - string_not_empty 
+      - name: sales_us
+        description: "sales of united states"
+        
+      
+

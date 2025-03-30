@@ -1,0 +1,29 @@
+models:
+  - name : customers_stg
+    columns:
+      - name : Email
+        description: "email address of the customer staging table."
+        tests:
+          - string_not_empty
+
+  - name : orders_fact
+    columns:
+      - name : statusdesc
+        description: "it's showing current status of the orders_fact table."
+        tests:
+          - string_not_empty
+          - accepted_values:
+              values: ['In Progress','Completed','Pending']
+
+  - name : orders_stg
+    columns:
+      - name: orderID
+        description: "order id of the orders_stg table."
+        test:
+          - unique
+          - not null
+
+  - name: orderitems_stg
+    tests:
+      - dbt_expectations.expect_table_row_count_to_equal_other_table:
+          compare_model: ref("customers_uniq")

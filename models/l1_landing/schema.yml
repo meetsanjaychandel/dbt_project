@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: source_shop
+    database: dbt_postgres_db
+    schema: l1_landing
+    tables:
+      - name: orders
+      - name: customers
+      - name: orderitems
+
